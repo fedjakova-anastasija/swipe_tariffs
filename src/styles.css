@@ -260,16 +260,8 @@ input {
 .collapse-arrow-icon {
   width: 16px;
   height: 16px;
-  background: #2d6bcc;
+  color: #2d6bcc;
   display: inline-block;
-  mask-image: var(--icon-url);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-image: var(--icon-url);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
 }
 
 .collapse-arrow-icon {
@@ -325,16 +317,8 @@ input {
 .room-toggle-icon {
   width: 14px;
   height: 14px;
-  background: #2d6bcc;
+  color: #2d6bcc;
   display: inline-block;
-  mask-image: var(--icon-url);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-image: var(--icon-url);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
 }
 
 .filter-chip-arrow {
@@ -459,16 +443,8 @@ input {
 .room-feature-svg {
   width: 16px;
   height: 16px;
-  background: #7d858f;
+  color: #7d858f;
   display: inline-block;
-  mask-image: var(--icon-url);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-image: var(--icon-url);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
 }
 
 .room-card-body {
@@ -678,14 +654,6 @@ input {
 .service-check-icon,
 .service-card-placeholder {
   display: inline-block;
-  mask-image: var(--icon-url);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-image: var(--icon-url);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
 }
 
 .bed-select-icon,
@@ -693,7 +661,7 @@ input {
 .service-link-icon {
   width: 16px;
   height: 16px;
-  background: #2d6bcc;
+  color: #2d6bcc;
 }
 
 .bed-select-note {
@@ -748,16 +716,8 @@ input {
 .bed-select-option-icon {
   width: 18px;
   height: 18px;
-  background: #8d95a1;
+  color: #8d95a1;
   display: inline-block;
-  mask-image: var(--icon-url);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-image: var(--icon-url);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
 }
 
 .tariff-slider {
@@ -842,21 +802,13 @@ input {
 .rate-feature-icon {
   width: 18px;
   height: 18px;
-  background: #98a1ad;
+  color: #98a1ad;
   flex: 0 0 auto;
   display: inline-block;
-  mask-image: var(--icon-url);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-image: var(--icon-url);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
 }
 
 .rate-feature-icon-benefit {
-  background: #ec7b12;
+  color: #ec7b12;
 }
 
 .rate-price-block {
@@ -911,16 +863,16 @@ input {
 .service-meta-icon {
   width: 18px;
   height: 18px;
-  background: #2d6bcc;
+  color: #2d6bcc;
   flex: 0 0 auto;
 }
 
 .service-meta-icon {
-  background: #8d95a1;
+  color: #8d95a1;
 }
 
 .service-meta-icon-selected {
-  background: #2d6bcc;
+  color: #2d6bcc;
 }
 
 .tariff-info-icon {
@@ -1084,7 +1036,7 @@ input {
 .service-group-icon {
   width: 22px;
   height: 22px;
-  background: #fff;
+  color: #fff;
 }
 
 .service-cards-stack {
@@ -1108,7 +1060,7 @@ input {
 .service-card-placeholder {
   width: 98px;
   height: 98px;
-  background: #ced4de;
+  color: #ced4de;
 }
 
 .service-card-content {
@@ -1200,7 +1152,7 @@ input {
 .service-check-icon {
   width: 16px;
   height: 16px;
-  background: #737b87;
+  color: #737b87;
 }
 
 .modal-overlay {
@@ -1254,16 +1206,8 @@ input {
 .rate-details-close-icon {
   width: 16px;
   height: 16px;
-  background: #7d858f;
+  color: #7d858f;
   display: inline-block;
-  mask-image: var(--icon-url);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-image: var(--icon-url);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
 }
 
 .rate-details-body {
@@ -1405,16 +1349,16 @@ input {
 .success-icon {
   width: 56px;
   height: 56px;
-  background: #2d6bcc;
+  color: #2d6bcc;
   display: inline-block;
-  mask-image: var(--icon-url);
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: contain;
-  -webkit-mask-image: var(--icon-url);
-  -webkit-mask-repeat: no-repeat;
-  -webkit-mask-position: center;
-  -webkit-mask-size: contain;
+}
+
+.svg-inline-icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  color: inherit;
+  fill: currentColor;
 }
 
 .success-card h2 {

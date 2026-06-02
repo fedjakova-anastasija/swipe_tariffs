@@ -5,6 +5,7 @@ export default defineConfig({
   base: '/swipe_tariffs/',
   plugins: [react()],
   build: {
+    assetInlineLimit: 0,
     outDir: 'preview-dist',
   },
   server: {

@@ -11,32 +11,32 @@ import '../dist/dist/theming/booking-form.css';
 import './styles.css';
 import standardRoomImage from '../img/638905038895238797-b2a3803f-0648-417b-959d-0f86c6768e8b.jpg';
 import suiteRoomImage from '../img/638905039312398814-82a5d543-224a-4524-8a0f-b513be82f9bc.jpg';
-import mealIcon from '../img/svg/restaurant.svg';
-import cancellationIcon from '../img/svg/unlock.svg';
-import paymentIcon from '../img/svg/purse.svg';
-import guestIcon from '../img/svg/guests-group.svg';
-import serviceMealPlaceholderIcon from '../img/svg/service-placeholder-meal.svg';
-import serviceDefaultPlaceholderIcon from '../img/svg/service-placeholder-default.svg';
-import starIcon from '../img/svg/star.svg';
-import giftIcon from '../img/svg/gift.svg';
-import foodIcon from '../img/svg/food.svg';
-import cartIcon from '../img/svg/cart.svg';
-import validIcon from '../img/svg/valid.svg';
-import bathroomIcon from '../img/svg/features/bathroom.svg';
-import doubleBedIcon from '../img/svg/features/double_bed.svg';
-import balconyIcon from '../img/svg/features/balcony.svg';
-import airConditioningIcon from '../img/svg/features/air_conditioning.svg';
-import hairdryerIcon from '../img/svg/features/hairdryer.svg';
-import viewIcon from '../img/svg/features/view.svg';
-import kingBedIcon from '../img/svg/features/king_bed.svg';
-import lockIcon from '../img/svg/features/electronic_locks.svg';
-import wifiIcon from '../img/svg/features/wifi.svg';
-import arrowDownIcon from '../img/svg/arrow-down.svg';
-import arrowLeftIcon from '../img/svg/arrow-left.svg';
-import arrowRightIcon from '../img/svg/arrow-right.svg';
-import checkIcon from '../img/svg/check.svg';
-import externalLinkIcon from '../img/svg/arrow-corner-up.svg';
-import crossIcon from '../img/svg/cross.svg';
+import mealIcon from '../img/svg/restaurant.svg?raw';
+import cancellationIcon from '../img/svg/unlock.svg?raw';
+import paymentIcon from '../img/svg/purse.svg?raw';
+import guestIcon from '../img/svg/guests-group.svg?raw';
+import serviceMealPlaceholderIcon from '../img/svg/service-placeholder-meal.svg?raw';
+import serviceDefaultPlaceholderIcon from '../img/svg/service-placeholder-default.svg?raw';
+import starIcon from '../img/svg/star.svg?raw';
+import giftIcon from '../img/svg/gift.svg?raw';
+import foodIcon from '../img/svg/food.svg?raw';
+import cartIcon from '../img/svg/cart.svg?raw';
+import validIcon from '../img/svg/valid.svg?raw';
+import bathroomIcon from '../img/svg/features/bathroom.svg?raw';
+import doubleBedIcon from '../img/svg/features/double_bed.svg?raw';
+import balconyIcon from '../img/svg/features/balcony.svg?raw';
+import airConditioningIcon from '../img/svg/features/air_conditioning.svg?raw';
+import hairdryerIcon from '../img/svg/features/hairdryer.svg?raw';
+import viewIcon from '../img/svg/features/view.svg?raw';
+import kingBedIcon from '../img/svg/features/king_bed.svg?raw';
+import lockIcon from '../img/svg/features/electronic_locks.svg?raw';
+import wifiIcon from '../img/svg/features/wifi.svg?raw';
+import arrowDownIcon from '../img/svg/arrow-down.svg?raw';
+import arrowLeftIcon from '../img/svg/arrow-left.svg?raw';
+import arrowRightIcon from '../img/svg/arrow-right.svg?raw';
+import checkIcon from '../img/svg/check.svg?raw';
+import externalLinkIcon from '../img/svg/arrow-corner-up.svg?raw';
+import crossIcon from '../img/svg/cross.svg?raw';
 
 const roomImages = {
   standard: standardRoomImage,
@@ -856,17 +856,8 @@ function SvgMaskIcon({ className, icon }) {
   return (
     <span
       aria-hidden="true"
-      className={className}
-      style={{
-        maskImage: `url(${icon})`,
-        maskRepeat: 'no-repeat',
-        maskPosition: 'center',
-        maskSize: 'contain',
-        WebkitMaskImage: `url(${icon})`,
-        WebkitMaskRepeat: 'no-repeat',
-        WebkitMaskPosition: 'center',
-        WebkitMaskSize: 'contain',
-      }}
+      className={`${className} svg-inline-icon`}
+      dangerouslySetInnerHTML={{ __html: icon }}
     />
   );
 }
