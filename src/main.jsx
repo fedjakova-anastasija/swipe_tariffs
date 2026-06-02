@@ -853,7 +853,22 @@ function SuccessScreen() {
 }
 
 function SvgMaskIcon({ className, icon }) {
-  return <span aria-hidden="true" className={className} style={{ '--icon-url': `url(${icon})` }} />;
+  return (
+    <span
+      aria-hidden="true"
+      className={className}
+      style={{
+        maskImage: `url(${icon})`,
+        maskRepeat: 'no-repeat',
+        maskPosition: 'center',
+        maskSize: 'contain',
+        WebkitMaskImage: `url(${icon})`,
+        WebkitMaskRepeat: 'no-repeat',
+        WebkitMaskPosition: 'center',
+        WebkitMaskSize: 'contain',
+      }}
+    />
+  );
 }
 
 function FilterChip({ active, filter, onClear, onClick, open, value }) {
