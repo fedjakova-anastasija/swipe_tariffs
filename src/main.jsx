@@ -1,5 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
+import { createPortal } from 'react-dom';
 import {
   Button,
   Chip,
@@ -80,103 +81,6 @@ const initialFilterState = {
 
 const rooms = [
   {
-    id: 'standard-family',
-    image: roomImages.standard,
-    name: 'Одноместный',
-    params: 'до 5 мест',
-    area: '20 м²',
-    roomCount: '1 комн.',
-    guests: '1 двуспальная кровать · 1 диван',
-    oldPrice: 4000,
-    discount: '-35%',
-    priceFromPrefix: 'от',
-    stay: '2 дня / 2 гостя',
-    filterTags: {
-      bedType: ['double'],
-      view: ['river'],
-      balcony: true,
-    },
-    photoFeatures: [bathroomIcon, doubleBedIcon, balconyIcon, airConditioningIcon, hairdryerIcon],
-    rates: [
-      {
-        id: 'standard-basic-flex',
-        meal: 'Питание не включено',
-        cancellation: 'Бесплатная отмена',
-        payment: 'Без предоплаты',
-        price: 2600,
-        oldPrice: 4000,
-        discount: '-35%',
-        taxes: 'Налоги и сборы включены',
-        includedServiceIds: ['pool-access', 'gym-access'],
-        detailHighlights: ['Открытый бассейн', 'Тренажерный зал', 'Wi-Fi на всей территории'],
-        tooltipDetails: {
-          meal: {
-            title: 'Питание не включено',
-            text: 'Питание в стоимость не входит. Услуги питания можно добавить на следующем шаге.',
-          },
-          cancellation: {
-            title: 'Бесплатная отмена',
-            text: 'Бесплатная отмена бронирования возможна до 21.12.2026 0:00 (UTC +03:00). При отмене бронирования после 21.12.2026 0:00 (UTC +03:00) взимается 50% от размера предоплаты.',
-          },
-          payment: {
-            title: 'Способы оплаты',
-            text: 'Без предоплаты. Оплата производится при заселении.',
-          },
-        },
-      },
-      {
-        id: 'standard-basic-prepay',
-        meal: 'Завтрак "Английский"',
-        cancellation: 'Условия отмены',
-        payment: 'Нужна предоплата',
-        price: 3400,
-        oldPrice: 4000,
-        discount: '-15%',
-        taxes: 'Налоги и сборы включены',
-        includedServiceIds: ['breakfast', 'beach-access', 'parking'],
-        detailHighlights: ['Завтрак для 2 гостей', 'Доступ на пляж', 'Парковка на территории'],
-        tooltipDetails: {
-          meal: {
-            title: 'Завтрак',
-            text: 'За гостя в сутки. Английский завтрак включен в стоимость тарифа.',
-          },
-          cancellation: {
-            title: 'Условия отмены',
-            text: 'Бесплатная отмена невозможна. При отмене бронирования взимается стоимость первых суток проживания.',
-          },
-          payment: {
-            title: 'Способы оплаты',
-            text: 'Нужна предоплата. Для подтверждения бронирования потребуется оплата банковской картой.',
-          },
-        },
-      },
-      {
-        id: 'standard-breakfast',
-        meal: 'Питание «Всё включено»',
-        cancellation: 'Бесплатная отмена',
-        payment: 'Без предоплаты',
-        price: 4000,
-        taxes: 'Налоги и сборы включены',
-        includedServiceIds: ['all-inclusive', 'pool-access', 'beach-access', 'gym-access'],
-        detailHighlights: ['Все включено для 2 гостей', 'Бассейн', 'Пляж', 'Тренажерный зал'],
-        tooltipDetails: {
-          meal: {
-            title: 'Все включено',
-            text: 'За гостя в сутки. Всем гостям доступны завтрак, обед и ужин, а также безалкогольные напитки.',
-          },
-          cancellation: {
-            title: 'Бесплатная отмена',
-            text: 'Бесплатная отмена бронирования возможна до 21.12.2026 0:00 (UTC +03:00). После указанного срока действуют штрафные условия отмены.',
-          },
-          payment: {
-            title: 'Способы оплаты',
-            text: 'При заселении. Предварительная оплата не требуется.',
-          },
-        },
-      },
-    ],
-  },
-  {
     id: 'suite',
     image: roomImages.suite,
     name: 'Люкс',
@@ -204,8 +108,23 @@ const rooms = [
         oldPrice: 16000,
         discount: '-50%',
         taxes: 'Налоги и сборы включены',
-        includedServiceIds: ['pool-access', 'beach-access'],
-        detailHighlights: ['Бассейн', 'Пляж', 'Сейф в номере'],
+        includedServiceIds: ['pool-access', 'beach-access', 'spa-zone', 'bike-rental', 'parking'],
+        cardServiceTitles: ['Бассейн', 'Пляж'],
+        detailHighlights: ['Бассейн', 'Пляж', 'SPA-зона', 'Прокат велосипедов'],
+        tooltipDetails: {
+          meal: {
+            title: 'Питание не включено',
+            text: 'Питание в стоимость не входит. Его можно добавить на следующем шаге.',
+          },
+          cancellation: {
+            title: 'Бесплатная отмена',
+            text: 'Бесплатная отмена бронирования возможна до 21.12.2026 0:00 (UTC +03:00). После этого удерживается часть стоимости бронирования.',
+          },
+          payment: {
+            title: 'Способы оплаты',
+            text: 'Нужна предоплата. Для подтверждения бронирования требуется оплата банковской картой.',
+          },
+        },
       },
       {
         id: 'suite-breakfast-flex',
@@ -216,8 +135,24 @@ const rooms = [
         oldPrice: 12000,
         discount: '-20%',
         taxes: 'Налоги и сборы включены',
-        includedServiceIds: ['breakfast', 'gym-access', 'late-checkout'],
-        detailHighlights: ['Завтрак', 'Тренажерный зал', 'Поздний выезд до 14:00'],
+        includedServiceIds: ['breakfast', 'late-checkout', 'coworking', 'business-center'],
+        cardServiceTitles: ['Сейф', 'Поздний выезд'],
+        tooltipServiceTitles: ['Сейф', 'Поздний выезд', 'Коворкинг-зона', 'Бизнес-центр', 'Конференц-зал'],
+        detailHighlights: ['Сейф в номере', 'Поздний выезд до 14:00', 'Коворкинг-зона'],
+        tooltipDetails: {
+          meal: {
+            title: 'Завтрак',
+            text: 'Завтрак включен в стоимость тарифа для всех гостей.',
+          },
+          cancellation: {
+            title: 'Условия отмены',
+            text: 'Бесплатная отмена невозможна. При отмене бронирования взимается стоимость первых суток проживания.',
+          },
+          payment: {
+            title: 'Способы оплаты',
+            text: 'Без предоплаты. Оплата производится при заселении.',
+          },
+        },
       },
       {
         id: 'suite-breakfast-premium',
@@ -225,9 +160,127 @@ const rooms = [
         cancellation: 'Условия отмены',
         payment: 'Без предоплаты',
         price: 12000,
-        taxes: 'Налоги не включены',
-        includedServiceIds: ['breakfast', 'pool-access', 'beach-access', 'parking'],
-        detailHighlights: ['Завтрак', 'Бассейн', 'Пляж', 'Парковка'],
+        taxes: 'Налоги и сборы включены',
+        includedServiceIds: ['breakfast', 'pool-access', 'beach-access', 'parking', 'spa-zone', 'massage'],
+        cardServiceTitles: ['Бассейн', 'Парковка'],
+        detailHighlights: ['Бассейн', 'Пляж', 'Парковка', 'Массажные кабинеты'],
+        tooltipDetails: {
+          meal: {
+            title: 'Завтрак',
+            text: 'Завтрак включен в стоимость тарифа для всех гостей.',
+          },
+          cancellation: {
+            title: 'Условия отмены',
+            text: 'Бесплатная отмена невозможна. При отмене бронирования взимается стоимость первых суток проживания.',
+          },
+          payment: {
+            title: 'Способы оплаты',
+            text: 'Без предоплаты. Оплата производится при заселении.',
+          },
+        },
+      },
+    ],
+  },
+  {
+    id: 'standard-family',
+    image: roomImages.standard,
+    name: 'Одноместный',
+    params: 'до 5 мест',
+    area: '20 м²',
+    roomCount: '1 комн.',
+    guests: '1 двуспальная кровать · 1 диван',
+    oldPrice: 4000,
+    discount: '-35%',
+    priceFromPrefix: 'от',
+    stay: '2 дня / 2 гостя',
+    filterTags: {
+      bedType: ['double'],
+      view: ['river'],
+      balcony: true,
+    },
+    photoFeatures: [bathroomIcon, doubleBedIcon, balconyIcon, airConditioningIcon, hairdryerIcon],
+    rates: [
+      {
+        id: 'standard-basic-flex',
+        meal: 'Питание не включено',
+        cancellation: 'Бесплатная отмена',
+        payment: 'Без предоплаты',
+        price: 2600,
+        oldPrice: 4000,
+        discount: '-35%',
+        taxes: 'Налоги и сборы включены',
+        includedServiceIds: ['pool-access', 'parking', 'beach-access', 'spa-zone', 'bike-rental'],
+        cardServiceTitles: ['Бассейн', 'Парковка'],
+        tooltipServiceTitles: ['Бассейн', 'Парковка', 'Пляж', 'SPA-зона', 'Прокат спортивного инвентаря'],
+        detailHighlights: ['Открытый бассейн', 'Парковка на территории'],
+        tooltipDetails: {
+          meal: {
+            title: 'Питание не включено',
+            text: 'Питание в стоимость не входит. Услуги питания можно добавить на следующем шаге.',
+          },
+          cancellation: {
+            title: 'Бесплатная отмена',
+            text: 'Бесплатная отмена бронирования возможна до 21.12.2026 0:00 (UTC +03:00). При отмене бронирования после 21.12.2026 0:00 (UTC +03:00) взимается 50% от размера предоплаты.',
+          },
+          payment: {
+            title: 'Способы оплаты',
+            text: 'Без предоплаты. Оплата производится при заселении.',
+          },
+        },
+      },
+      {
+        id: 'standard-basic-prepay',
+        meal: 'Завтрак "Английский"',
+        cancellation: 'Условия отмены',
+        payment: 'Нужна предоплата',
+        price: 3400,
+        oldPrice: 4000,
+        discount: '-15%',
+        taxes: 'Налоги и сборы включены',
+        includedServiceIds: ['beach-access', 'gym-access', 'parking', 'coworking', 'business-center'],
+        cardServiceTitles: ['Пляж', 'Тренажерный зал'],
+        tooltipServiceTitles: ['Пляж', 'Тренажерный зал', 'Парковка', 'Коворкинг-зона', 'Бизнес-центр'],
+        detailHighlights: ['Доступ на пляж', 'Тренажерный зал'],
+        tooltipDetails: {
+          meal: {
+            title: 'Завтрак',
+            text: 'За гостя в сутки. Английский завтрак включен в стоимость тарифа.',
+          },
+          cancellation: {
+            title: 'Условия отмены',
+            text: 'Бесплатная отмена невозможна. При отмене бронирования взимается стоимость первых суток проживания.',
+          },
+          payment: {
+            title: 'Способы оплаты',
+            text: 'Нужна предоплата. Для подтверждения бронирования потребуется оплата банковской картой.',
+          },
+        },
+      },
+      {
+        id: 'standard-breakfast',
+        meal: 'Питание «Всё включено»',
+        cancellation: 'Бесплатная отмена',
+        payment: 'Без предоплаты',
+        price: 4000,
+        taxes: 'Налоги и сборы включены',
+        includedServiceIds: ['gym-access', 'business-center', 'beach-access', 'spa-zone', 'massage'],
+        cardServiceTitles: ['Фитнес-зал', 'Бизнес-центр'],
+        tooltipServiceTitles: ['Фитнес-зал', 'Бизнес-центр', 'Пляж', 'SPA-зона', 'Массажные кабинеты'],
+        detailHighlights: ['Фитнес-зал', 'Бизнес-центр'],
+        tooltipDetails: {
+          meal: {
+            title: 'Все включено',
+            text: 'За гостя в сутки. Всем гостям доступны завтрак, обед и ужин, а также безалкогольные напитки.',
+          },
+          cancellation: {
+            title: 'Бесплатная отмена',
+            text: 'Бесплатная отмена бронирования возможна до 21.12.2026 0:00 (UTC +03:00). После указанного срока действуют штрафные условия отмены.',
+          },
+          payment: {
+            title: 'Способы оплаты',
+            text: 'При заселении. Предварительная оплата не требуется.',
+          },
+        },
       },
     ],
   },
@@ -343,6 +396,117 @@ const serviceGroups = [
         description: 'Продление пребывания в номере до 14:00 в день выезда.',
         meta: 'За 1 использование',
         price: 500,
+        period: 'за 2 дня',
+        actionLabel: 'Добавить',
+        includedLabel: 'Услуга включена',
+      },
+      {
+        id: 'spa-zone',
+        imageIcon: serviceDefaultPlaceholderIcon,
+        title: 'SPA-зона',
+        description: 'Сауна, хаммам, баня и джакузи в wellness-комплексе отеля.',
+        meta: 'Для 2 гостей',
+        price: 1800,
+        period: 'за 2 дня',
+        actionLabel: 'Добавить',
+        includedLabel: 'Услуга включена',
+      },
+      {
+        id: 'massage',
+        imageIcon: serviceDefaultPlaceholderIcon,
+        title: 'Массаж и косметические процедуры',
+        description: 'Доступ к массажным кабинетам и базовым spa-процедурам по записи.',
+        meta: 'Для 1 гостя',
+        price: 2500,
+        period: 'за 2 дня',
+        actionLabel: 'Добавить',
+        includedLabel: 'Услуга включена',
+      },
+      {
+        id: 'bike-rental',
+        imageIcon: serviceDefaultPlaceholderIcon,
+        title: 'Прокат спортивного инвентаря',
+        description: 'Велосипеды и другой сезонный инвентарь по предварительному запросу.',
+        meta: 'Для 2 гостей',
+        price: 1200,
+        period: 'за 2 дня',
+        actionLabel: 'Добавить',
+        includedLabel: 'Услуга включена',
+      },
+      {
+        id: 'kids-room',
+        imageIcon: serviceDefaultPlaceholderIcon,
+        title: 'Детская игровая комната',
+        description: 'Игровая комната и площадка на улице доступны ежедневно.',
+        meta: 'Для 1 ребенка',
+        price: 0,
+        priceLabel: 'Бесплатно',
+        period: 'за 2 дня',
+        actionLabel: 'Добавить',
+        includedLabel: 'Услуга включена',
+      },
+      {
+        id: 'baby-crib',
+        imageIcon: serviceDefaultPlaceholderIcon,
+        title: 'Детская кроватка и манеж',
+        description: 'По запросу предоставляется детская кроватка или манеж в номер.',
+        meta: 'За 1 использование',
+        price: 700,
+        period: 'за 2 дня',
+        actionLabel: 'Добавить',
+        includedLabel: 'Услуга включена',
+      },
+      {
+        id: 'kids-menu',
+        imageIcon: serviceDefaultPlaceholderIcon,
+        title: 'Детское меню',
+        description: 'Детские стульчики в ресторане и специальное меню для маленьких гостей.',
+        meta: 'Для 1 ребенка',
+        price: 900,
+        period: 'за 2 дня',
+        actionLabel: 'Добавить',
+        includedLabel: 'Услуга включена',
+      },
+      {
+        id: 'kids-club',
+        imageIcon: serviceDefaultPlaceholderIcon,
+        title: 'Детская анимация и мини-клуб',
+        description: 'Анимационная программа и мини-клуб для детей по расписанию отеля.',
+        meta: 'Для 1 ребенка',
+        price: 1400,
+        period: 'за 2 дня',
+        actionLabel: 'Добавить',
+        includedLabel: 'Услуга включена',
+      },
+      {
+        id: 'nanny-service',
+        imageIcon: serviceDefaultPlaceholderIcon,
+        title: 'Услуги профессиональной няни',
+        description: 'Индивидуальный присмотр за ребенком по предварительному бронированию.',
+        meta: 'За 1 использование',
+        price: 3000,
+        period: 'за 2 дня',
+        actionLabel: 'Добавить',
+        includedLabel: 'Услуга включена',
+      },
+      {
+        id: 'business-center',
+        imageIcon: serviceDefaultPlaceholderIcon,
+        title: 'Бизнес-центр',
+        description: 'Компьютеры, принтер, сканер и копир для рабочих задач.',
+        meta: 'Для 2 гостей',
+        price: 1100,
+        period: 'за 2 дня',
+        actionLabel: 'Добавить',
+        includedLabel: 'Услуга включена',
+      },
+      {
+        id: 'coworking',
+        imageIcon: serviceDefaultPlaceholderIcon,
+        title: 'Коворкинг-зона',
+        description: 'Рабочие места с быстрым интернетом и розетками в общем пространстве.',
+        meta: 'Для 2 гостей',
+        price: 900,
         period: 'за 2 дня',
         actionLabel: 'Добавить',
         includedLabel: 'Услуга включена',
@@ -652,6 +816,7 @@ function TariffHorizontalSlider({ onOpenDetails, room, onSelectRate }) {
         <RateCard
           key={rate.id}
           onOpenDetails={() => onOpenDetails(rate)}
+          room={room}
           rate={rate}
           onSelect={() => onSelectRate(room, rate)}
         />
@@ -660,8 +825,14 @@ function TariffHorizontalSlider({ onOpenDetails, room, onSelectRate }) {
   );
 }
 
-function RateCard({ onOpenDetails, rate, onSelect }) {
+function RateCard({ onOpenDetails, rate, room, onSelect }) {
   const [activeTooltip, setActiveTooltip] = React.useState(null);
+  const featureButtonRefs = React.useRef({});
+  const priceButtonRef = React.useRef(null);
+  const servicesButtonRef = React.useRef(null);
+  const visibleServices = (rate.cardServiceTitles || []).slice(0, 2);
+  const tooltipServices = rate.tooltipServiceTitles || getIncludedServiceTitles(rate);
+  const hiddenServicesCount = Math.max(0, tooltipServices.length - visibleServices.length);
   const features = [
     { key: 'meal', text: rate.meal, benefit: rate.meal !== 'Питание не включено', icon: mealIcon },
     { key: 'cancellation', text: rate.cancellation, benefit: rate.cancellation === 'Бесплатная отмена', icon: cancellationIcon },
@@ -673,17 +844,48 @@ function RateCard({ onOpenDetails, rate, onSelect }) {
       <div className="rate-feature-list">
         {features.map((feature) => (
           <div key={feature.key} className="rate-feature-wrap">
-            <button className="rate-feature rate-feature-button" onClick={() => setActiveTooltip((prev) => (prev === feature.key ? null : feature.key))} type="button">
+            <button
+              className="rate-feature rate-feature-button"
+              onClick={() => setActiveTooltip((prev) => (prev === feature.key ? null : feature.key))}
+              ref={(node) => {
+                featureButtonRefs.current[feature.key] = node;
+              }}
+              type="button"
+            >
               <SvgMaskIcon className={`rate-feature-icon ${feature.benefit ? 'rate-feature-icon-benefit' : ''}`} icon={feature.icon} />
               <span className="rate-feature-text">{feature.text}</span>
             </button>
             {activeTooltip === feature.key ? (
-              <InlineTooltip anchor="feature" onClose={() => setActiveTooltip(null)} title={rate.tooltipDetails[feature.key].title}>
+              <InlineTooltip anchor="feature" anchorRef={featureButtonRefs.current[feature.key]} onClose={() => setActiveTooltip(null)} title={rate.tooltipDetails[feature.key].title}>
                 {rate.tooltipDetails[feature.key].text}
               </InlineTooltip>
             ) : null}
           </div>
         ))}
+        {visibleServices.length > 0 ? (
+          <div className="rate-feature-wrap">
+            <div className="rate-feature rate-feature-services">
+              <SvgMaskIcon className="rate-feature-icon rate-feature-icon-benefit" icon={giftIcon} />
+              <div className="rate-feature-services-text">
+                <span>{visibleServices.join(', ')}</span>
+                {hiddenServicesCount > 0 ? (
+                  <button className="rate-feature-spoiler" onClick={() => setActiveTooltip((prev) => (prev === 'services' ? null : 'services'))} ref={servicesButtonRef} type="button">
+                    + еще {hiddenServicesCount}
+                  </button>
+                ) : null}
+              </div>
+            </div>
+            {activeTooltip === 'services' ? (
+              <InlineTooltip anchor="feature" anchorRef={servicesButtonRef.current} onClose={() => setActiveTooltip(null)} title="Услуги по тарифу">
+                <div className="services-tooltip-list">
+                  {tooltipServices.map((service) => (
+                    <div key={service}>{service}</div>
+                  ))}
+                </div>
+              </InlineTooltip>
+            ) : null}
+          </div>
+        ) : null}
       </div>
       <div className="tariff-card-head">
         <button className="tariff-details-button" onClick={onOpenDetails} type="button">
@@ -702,12 +904,12 @@ function RateCard({ onOpenDetails, rate, onSelect }) {
           <div className="tariff-price-row">
             <SvgMaskIcon className="tariff-guest-icon" icon={guestIcon} />
             <div className="rate-price">{formatPrice(rate.price)}</div>
-            <button className="tariff-info-button" onClick={() => setActiveTooltip((prev) => (prev === 'price' ? null : 'price'))} type="button" aria-label="Детализация цены">
+            <button className="tariff-info-button" onClick={() => setActiveTooltip((prev) => (prev === 'price' ? null : 'price'))} ref={priceButtonRef} type="button" aria-label="Детализация цены">
               <span className="tariff-info-icon">i</span>
             </button>
           </div>
           {activeTooltip === 'price' ? (
-            <InlineTooltip anchor="price" onClose={() => setActiveTooltip(null)} title="Детализация цены, ₽" wide>
+            <InlineTooltip anchor="price" anchorRef={priceButtonRef.current} onClose={() => setActiveTooltip(null)} title="Детализация цены, ₽" wide>
               <div>24 декабря - 25 декабря, 2 дня</div>
               <div>2 взрослых - {formatPrice(Math.round(rate.price / 2))} за день</div>
               <div className="price-tooltip-divider" />
@@ -730,9 +932,60 @@ function RateCard({ onOpenDetails, rate, onSelect }) {
   );
 }
 
-function InlineTooltip({ anchor, children, onClose, title, wide }) {
-  return (
-    <div className={`inline-tooltip inline-tooltip-${anchor} ${wide ? 'inline-tooltip-wide' : ''}`}>
+function InlineTooltip({ anchor, anchorRef, children, onClose, title, wide }) {
+  const tooltipRef = React.useRef(null);
+  const [position, setPosition] = React.useState(null);
+
+  React.useLayoutEffect(() => {
+    if (!anchorRef || !tooltipRef.current) {
+      return undefined;
+    }
+
+    const updatePosition = () => {
+      if (!anchorRef || !tooltipRef.current) {
+        return;
+      }
+
+      const anchorRect = anchorRef.getBoundingClientRect();
+      const tooltipRect = tooltipRef.current.getBoundingClientRect();
+      const viewportPadding = 12;
+      const left = Math.min(
+        Math.max(viewportPadding, anchorRect.left),
+        window.innerWidth - tooltipRect.width - viewportPadding,
+      );
+
+      if (anchor === 'price') {
+        setPosition({
+          arrowLeft: Math.max(20, Math.min(anchorRect.left + anchorRect.width / 2 - left, tooltipRect.width - 20)),
+          left,
+          top: Math.max(viewportPadding, anchorRect.top - tooltipRect.height - 10),
+        });
+        return;
+      }
+
+      setPosition({
+        arrowLeft: Math.max(20, Math.min(anchorRect.left + 30 - left, tooltipRect.width - 20)),
+        left,
+        top: anchorRect.bottom + 10,
+      });
+    };
+
+    updatePosition();
+    window.addEventListener('resize', updatePosition);
+    window.addEventListener('scroll', updatePosition, true);
+
+    return () => {
+      window.removeEventListener('resize', updatePosition);
+      window.removeEventListener('scroll', updatePosition, true);
+    };
+  }, [anchor, anchorRef]);
+
+  if (!anchorRef) {
+    return null;
+  }
+
+  return createPortal(
+    <div className={`inline-tooltip-portal inline-tooltip-${anchor} ${wide ? 'inline-tooltip-wide' : ''}`} ref={tooltipRef} style={position ? { left: position.left, top: position.top } : { visibility: 'hidden' }}>
       <div className="inline-tooltip-header">
         <div>{title}</div>
         <button className="inline-tooltip-close" onClick={onClose} type="button" aria-label="Закрыть">
@@ -740,8 +993,9 @@ function InlineTooltip({ anchor, children, onClose, title, wide }) {
         </button>
       </div>
       <div className="inline-tooltip-body">{children}</div>
-      <div className="inline-tooltip-arrow" />
-    </div>
+      <div className="inline-tooltip-arrow" style={position ? { left: position.arrowLeft } : undefined} />
+    </div>,
+    document.body,
   );
 }
 
@@ -777,7 +1031,7 @@ function RateDetailsModal({ onClose, rate }) {
 
 function ServicesScreen({ onBack, onContinue, onToggleService, selectedOffer, selectedServiceIds }) {
   const { room, rate } = selectedOffer;
-  const includedServiceIds = rate.includedServiceIds || [];
+  const includedServiceIds = getRateIncludedServiceIds(rate);
   const totalPrice = rate.price + selectedServiceIds.reduce((sum, serviceId) => sum + getServicePrice(serviceId), 0);
 
   return (
@@ -1074,6 +1328,80 @@ function formatNumberWithDecimals(value) {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   }).format(value);
+}
+
+function getIncludedServiceTitles(rate) {
+  return getRateIncludedServiceIds(rate)
+    .filter((serviceId) => !['breakfast', 'half-board', 'all-inclusive'].includes(serviceId))
+    .map((serviceId) => getServiceTitle(serviceId))
+    .filter(Boolean);
+}
+
+function getRateIncludedServiceIds(rate) {
+  const serviceIds = [...(rate.includedServiceIds || []), ...getServiceIdsFromTitles(rate.cardServiceTitles || [])];
+  const mealServiceId = getMealServiceId(rate.meal);
+
+  if (mealServiceId && !serviceIds.includes(mealServiceId)) {
+    serviceIds.unshift(mealServiceId);
+  }
+
+  return [...new Set(serviceIds)];
+}
+
+function getMealServiceId(meal) {
+  if (!meal) {
+    return null;
+  }
+
+  if (meal.includes('Всё включено') || meal.includes('Все включено')) {
+    return 'all-inclusive';
+  }
+
+  if (meal.includes('Полупансион')) {
+    return 'half-board';
+  }
+
+  if (meal.includes('Завтрак')) {
+    return 'breakfast';
+  }
+
+  return null;
+}
+
+function getServiceIdsFromTitles(titles) {
+  return titles
+    .map((title) => SERVICE_TITLE_TO_ID[title] || null)
+    .filter(Boolean);
+}
+
+const SERVICE_TITLE_TO_ID = {
+  'Бассейн': 'pool-access',
+  'Пляж': 'beach-access',
+  'Парковка': 'parking',
+  'Тренажерный зал': 'gym-access',
+  'Фитнес-зал': 'gym-access',
+  'Бизнес-центр': 'business-center',
+  'Поздний выезд': 'late-checkout',
+  'Коворкинг-зона': 'coworking',
+  'SPA-зона': 'spa-zone',
+  'Массажные кабинеты': 'massage',
+  'Детское меню': 'kids-menu',
+  'Детская игровая комната': 'kids-room',
+  'Детская кроватка и манеж': 'baby-crib',
+  'Детская анимация и мини-клуб': 'kids-club',
+  'Услуги профессиональной няни': 'nanny-service',
+  'Прокат спортивного инвентаря': 'bike-rental',
+};
+
+function getServiceTitle(serviceId) {
+  for (const group of serviceGroups) {
+    const service = group.services.find((item) => item.id === serviceId);
+    if (service) {
+      return service.title;
+    }
+  }
+
+  return '';
 }
 
 createRoot(document.getElementById('root')).render(

@@ -804,7 +804,7 @@ input {
 }
 
 .rate-feature-wrap {
-  position: relative;
+  position: static;
 }
 
 .rate-feature-button {
@@ -823,6 +823,41 @@ input {
 .rate-feature-button:focus-visible {
   opacity: 0.85;
   outline: none;
+}
+
+.rate-feature-services {
+  align-items: flex-start;
+}
+
+.rate-feature-services-text {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  flex-wrap: nowrap;
+  min-width: 0;
+}
+
+.rate-feature-services-text > span {
+  white-space: nowrap;
+}
+
+.rate-feature-spoiler {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  color: #205db8;
+  font: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+.services-tooltip-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .rate-feature-text {
@@ -929,9 +964,8 @@ input {
   line-height: 1;
 }
 
-.inline-tooltip {
-  position: absolute;
-  left: 0;
+.inline-tooltip-portal {
+  position: fixed;
   width: 220px;
   background: #fff;
   border: 1px solid #d4dcea;
@@ -946,17 +980,9 @@ input {
   width: 286px;
 }
 
-.inline-tooltip-feature {
-  top: calc(100% + 8px);
-  bottom: auto;
-  left: 0;
-  z-index: 8;
-}
-
+.inline-tooltip-feature,
 .inline-tooltip-price {
-  left: -4px;
-  bottom: calc(100% + 10px);
-  z-index: 7;
+  z-index: 30;
 }
 
 .inline-tooltip-header {
