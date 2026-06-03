@@ -109,11 +109,25 @@ const rooms = [
         taxes: 'Налоги и сборы включены',
         includedServiceIds: ['pool-access', 'gym-access'],
         detailHighlights: ['Открытый бассейн', 'Тренажерный зал', 'Wi-Fi на всей территории'],
+        tooltipDetails: {
+          meal: {
+            title: 'Питание не включено',
+            text: 'Питание в стоимость не входит. Услуги питания можно добавить на следующем шаге.',
+          },
+          cancellation: {
+            title: 'Бесплатная отмена',
+            text: 'Бесплатная отмена бронирования возможна до 21.12.2026 0:00 (UTC +03:00). При отмене бронирования после 21.12.2026 0:00 (UTC +03:00) взимается 50% от размера предоплаты.',
+          },
+          payment: {
+            title: 'Способы оплаты',
+            text: 'Без предоплаты. Оплата производится при заселении.',
+          },
+        },
       },
       {
         id: 'standard-basic-prepay',
         meal: 'Завтрак "Английский"',
-        cancellation: 'Бесплатная отмена',
+        cancellation: 'Условия отмены',
         payment: 'Нужна предоплата',
         price: 3400,
         oldPrice: 4000,
@@ -121,6 +135,20 @@ const rooms = [
         taxes: 'Налоги и сборы включены',
         includedServiceIds: ['breakfast', 'beach-access', 'parking'],
         detailHighlights: ['Завтрак для 2 гостей', 'Доступ на пляж', 'Парковка на территории'],
+        tooltipDetails: {
+          meal: {
+            title: 'Завтрак',
+            text: 'За гостя в сутки. Английский завтрак включен в стоимость тарифа.',
+          },
+          cancellation: {
+            title: 'Условия отмены',
+            text: 'Бесплатная отмена невозможна. При отмене бронирования взимается стоимость первых суток проживания.',
+          },
+          payment: {
+            title: 'Способы оплаты',
+            text: 'Нужна предоплата. Для подтверждения бронирования потребуется оплата банковской картой.',
+          },
+        },
       },
       {
         id: 'standard-breakfast',
@@ -128,9 +156,23 @@ const rooms = [
         cancellation: 'Бесплатная отмена',
         payment: 'Без предоплаты',
         price: 4000,
-        taxes: 'Налоги не включены',
-        includedServiceIds: ['half-board', 'pool-access', 'beach-access', 'gym-access'],
-        detailHighlights: ['Полупансион для 2 гостей', 'Бассейн', 'Пляж', 'Тренажерный зал'],
+        taxes: 'Налоги и сборы включены',
+        includedServiceIds: ['all-inclusive', 'pool-access', 'beach-access', 'gym-access'],
+        detailHighlights: ['Все включено для 2 гостей', 'Бассейн', 'Пляж', 'Тренажерный зал'],
+        tooltipDetails: {
+          meal: {
+            title: 'Все включено',
+            text: 'За гостя в сутки. Всем гостям доступны завтрак, обед и ужин, а также безалкогольные напитки.',
+          },
+          cancellation: {
+            title: 'Бесплатная отмена',
+            text: 'Бесплатная отмена бронирования возможна до 21.12.2026 0:00 (UTC +03:00). После указанного срока действуют штрафные условия отмены.',
+          },
+          payment: {
+            title: 'Способы оплаты',
+            text: 'При заселении. Предварительная оплата не требуется.',
+          },
+        },
       },
     ],
   },
@@ -209,6 +251,16 @@ const serviceGroups = [
         title: 'Завтрак',
         meta: 'Для 2 гостей ежедневно',
         price: 1600,
+        period: 'за 2 дня',
+        includedLabel: 'Услуга включена',
+      },
+      {
+        id: 'all-inclusive',
+        imageIcon: serviceMealPlaceholderIcon,
+        title: 'Все включено',
+        description: 'Завтрак, обед и ужин включены в стоимость тарифа для всех гостей.',
+        meta: 'Для 2 гостей ежедневно',
+        price: 4800,
         period: 'за 2 дня',
         includedLabel: 'Услуга включена',
       },
@@ -609,19 +661,27 @@ function TariffHorizontalSlider({ onOpenDetails, room, onSelectRate }) {
 }
 
 function RateCard({ onOpenDetails, rate, onSelect }) {
+  const [activeTooltip, setActiveTooltip] = React.useState(null);
   const features = [
-    { text: rate.meal, benefit: rate.meal !== 'Питание не включено', icon: mealIcon },
-    { text: rate.cancellation, benefit: rate.cancellation === 'Бесплатная отмена', icon: cancellationIcon },
-    { text: rate.payment, benefit: rate.payment === 'Без предоплаты', icon: paymentIcon },
+    { key: 'meal', text: rate.meal, benefit: rate.meal !== 'Питание не включено', icon: mealIcon },
+    { key: 'cancellation', text: rate.cancellation, benefit: rate.cancellation === 'Бесплатная отмена', icon: cancellationIcon },
+    { key: 'payment', text: rate.payment, benefit: rate.payment === 'Без предоплаты', icon: paymentIcon },
   ];
 
   return (
     <div className="rate-card tariff-compare-card">
       <div className="rate-feature-list">
         {features.map((feature) => (
-          <div key={feature.text} className="rate-feature">
-            <SvgMaskIcon className={`rate-feature-icon ${feature.benefit ? 'rate-feature-icon-benefit' : ''}`} icon={feature.icon} />
-            <span>{feature.text}</span>
+          <div key={feature.key} className="rate-feature-wrap">
+            <button className="rate-feature rate-feature-button" onClick={() => setActiveTooltip((prev) => (prev === feature.key ? null : feature.key))} type="button">
+              <SvgMaskIcon className={`rate-feature-icon ${feature.benefit ? 'rate-feature-icon-benefit' : ''}`} icon={feature.icon} />
+              <span className="rate-feature-text">{feature.text}</span>
+            </button>
+            {activeTooltip === feature.key ? (
+              <InlineTooltip anchor="feature" onClose={() => setActiveTooltip(null)} title={rate.tooltipDetails[feature.key].title}>
+                {rate.tooltipDetails[feature.key].text}
+              </InlineTooltip>
+            ) : null}
           </div>
         ))}
       </div>
@@ -642,8 +702,23 @@ function RateCard({ onOpenDetails, rate, onSelect }) {
           <div className="tariff-price-row">
             <SvgMaskIcon className="tariff-guest-icon" icon={guestIcon} />
             <div className="rate-price">{formatPrice(rate.price)}</div>
-            <span className="tariff-info-icon">i</span>
+            <button className="tariff-info-button" onClick={() => setActiveTooltip((prev) => (prev === 'price' ? null : 'price'))} type="button" aria-label="Детализация цены">
+              <span className="tariff-info-icon">i</span>
+            </button>
           </div>
+          {activeTooltip === 'price' ? (
+            <InlineTooltip anchor="price" onClose={() => setActiveTooltip(null)} title="Детализация цены, ₽" wide>
+              <div>24 декабря - 25 декабря, 2 дня</div>
+              <div>2 взрослых - {formatPrice(Math.round(rate.price / 2))} за день</div>
+              <div className="price-tooltip-divider" />
+              <div className="price-tooltip-heading">Стоимость дома</div>
+              <div className="price-tooltip-total-row">
+                <span>за весь период проживания</span>
+                <strong>{formatNumberWithDecimals(rate.price)}</strong>
+              </div>
+              <div className="price-tooltip-taxes">{rate.taxes}</div>
+            </InlineTooltip>
+          ) : null}
         </div>
         <div className="tariff-button-wrap tariff-button-wrap-full">
           <Button form="round" onClick={onSelect} size="m" variant="primary" width={buttonWidthEnum.full}>
@@ -651,6 +726,21 @@ function RateCard({ onOpenDetails, rate, onSelect }) {
           </Button>
         </div>
       </div>
+    </div>
+  );
+}
+
+function InlineTooltip({ anchor, children, onClose, title, wide }) {
+  return (
+    <div className={`inline-tooltip inline-tooltip-${anchor} ${wide ? 'inline-tooltip-wide' : ''}`}>
+      <div className="inline-tooltip-header">
+        <div>{title}</div>
+        <button className="inline-tooltip-close" onClick={onClose} type="button" aria-label="Закрыть">
+          <SvgMaskIcon className="rate-details-close-icon" icon={crossIcon} />
+        </button>
+      </div>
+      <div className="inline-tooltip-body">{children}</div>
+      <div className="inline-tooltip-arrow" />
     </div>
   );
 }
@@ -977,6 +1067,13 @@ function getServicePrice(serviceId) {
 
 function formatPrice(value) {
   return new Intl.NumberFormat('ru-RU').format(value) + ' ₽';
+}
+
+function formatNumberWithDecimals(value) {
+  return new Intl.NumberFormat('ru-RU', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  }).format(value);
 }
 
 createRoot(document.getElementById('root')).render(

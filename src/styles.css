@@ -727,6 +727,7 @@ input {
   grid-auto-columns: calc(100% - 52px);
   gap: 12px;
   overflow-x: auto;
+  overflow-y: visible;
   padding-bottom: 2px;
   scroll-snap-type: x proximity;
   scrollbar-width: none;
@@ -739,6 +740,9 @@ input {
 .tariff-compare-card {
   scroll-snap-align: start;
   min-height: 272px;
+  overflow: visible;
+  position: relative;
+  z-index: 1;
 }
 
 .tariff-card-head {
@@ -799,6 +803,33 @@ input {
   gap: 10px;
 }
 
+.rate-feature-wrap {
+  position: relative;
+}
+
+.rate-feature-button {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  padding: 2px 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  justify-content: flex-start;
+}
+
+.rate-feature-button:active,
+.rate-feature-button:focus-visible {
+  opacity: 0.85;
+  outline: none;
+}
+
+.rate-feature-text {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
 .rate-feature-icon {
   width: 18px;
   height: 18px;
@@ -846,6 +877,7 @@ input {
 
 .tariff-price-inline {
   min-width: 0;
+  position: relative;
 }
 
 .tariff-discount-row-fixed {
@@ -857,6 +889,15 @@ input {
   align-items: center;
   gap: 6px;
   margin-top: 3px;
+}
+
+.tariff-info-button {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
 }
 
 .tariff-guest-icon,
@@ -886,6 +927,135 @@ input {
   align-items: center;
   justify-content: center;
   line-height: 1;
+}
+
+.inline-tooltip {
+  position: absolute;
+  left: 0;
+  width: 220px;
+  background: #fff;
+  border: 1px solid #d4dcea;
+  border-radius: 10px;
+  box-shadow: 0 6px 18px rgba(38, 60, 99, 0.22);
+  padding: 14px 16px;
+  z-index: 5;
+  overflow: visible;
+}
+
+.inline-tooltip-wide {
+  width: 286px;
+}
+
+.inline-tooltip-feature {
+  top: calc(100% + 8px);
+  bottom: auto;
+  left: 0;
+  z-index: 8;
+}
+
+.inline-tooltip-price {
+  left: -4px;
+  bottom: calc(100% + 10px);
+  z-index: 7;
+}
+
+.inline-tooltip-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  color: #404040;
+  font-size: 18px;
+  line-height: 1.2;
+}
+
+.inline-tooltip-close {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.inline-tooltip-body {
+  margin-top: 12px;
+  color: #505863;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.inline-tooltip-arrow {
+  position: absolute;
+  left: 38px;
+  width: 0;
+  height: 0;
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+}
+
+.inline-tooltip-arrow::after {
+  content: '';
+  position: absolute;
+  left: -8px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+}
+
+.inline-tooltip-feature .inline-tooltip-arrow,
+.inline-tooltip-price .inline-tooltip-arrow {
+  left: 36px;
+}
+
+.inline-tooltip-feature .inline-tooltip-arrow {
+  top: -9px;
+  bottom: auto;
+  border-bottom: 9px solid #d4dcea;
+}
+
+.inline-tooltip-feature .inline-tooltip-arrow::after {
+  top: 1px;
+  border-bottom: 8px solid #fff;
+}
+
+.inline-tooltip-price .inline-tooltip-arrow {
+  bottom: -8px;
+  top: auto;
+  border-top: 9px solid #d4dcea;
+}
+
+.inline-tooltip-price .inline-tooltip-arrow::after {
+  top: -10px;
+  border-top: 8px solid #fff;
+}
+
+.price-tooltip-divider {
+  height: 1px;
+  background: #d4dcea;
+  margin: 12px 0;
+}
+
+.price-tooltip-total-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  color: #404040;
+}
+
+.price-tooltip-heading {
+  color: #404040;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.price-tooltip-taxes {
+  margin-top: 8px;
+  text-align: right;
+  color: #505863;
 }
 
 .tariff-button-wrap {
